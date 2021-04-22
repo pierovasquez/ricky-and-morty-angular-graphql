@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "create-module-and-component": "ng g m components/pages/home/home -m=app --route home --flat"
   },
   "private": true,
   "dependencies": {
