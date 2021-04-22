@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ricky-and-morty-angular-graphql';
+  author = 'Piero Vasquez';
 }
