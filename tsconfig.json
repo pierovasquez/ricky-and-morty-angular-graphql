@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "paths": {
       "@app/*": ["src/app/*"],
-      "@shared/*": ["src/shared/*"],
+      "@shared/*": ["src/app/shared/*"],
       "@characters/*": ["src/app/components/pages/characters/*"],
       "@pages/*": ["src/app/components/pages/*"],
       "@environment/*": ["src/environments/*"],
