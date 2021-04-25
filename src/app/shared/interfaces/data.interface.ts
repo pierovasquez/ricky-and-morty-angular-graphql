@@ -1,6 +1,15 @@
+export interface ApiResponse<T> {
+  results: T;
+}
+
+export interface DataResponse {
+  characters: ApiResponse<Character[]>
+  episodes: ApiResponse<Episode[]>
+}
+
 export interface Episode {
   name: string;
-  episodre: string;
+  episode: string;
 }
 
 

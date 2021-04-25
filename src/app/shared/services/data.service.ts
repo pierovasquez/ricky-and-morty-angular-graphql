@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { BehaviorSubject } from 'rxjs';
 import {take, tap} from 'rxjs/operators'
+import { Character, DataResponse, Episode } from '../interfaces/data.interface';
 const QUERY = gql `
 {
   episodes {
@@ -29,10 +30,10 @@ const QUERY = gql `
 })
 export class DataService {
 
-  private episodeSubject = new BehaviorSubject<any[]>([]);
+  private episodeSubject = new BehaviorSubject<Episode[]>([]);
   episodes$ = this.episodeSubject.asObservable();
 
-  private charactersSubject = new BehaviorSubject<any[]>([]);
+  private charactersSubject = new BehaviorSubject<Character[]>([]);
   characters$ = this.charactersSubject.asObservable();
 
   constructor(
@@ -43,7 +44,7 @@ export class DataService {
 
 
   private getDataApi(): void {
-    this.apollo.watchQuery<any>({
+    this.apollo.watchQuery<DataResponse>({
       query: QUERY
     }).valueChanges.pipe(
       take(1),
