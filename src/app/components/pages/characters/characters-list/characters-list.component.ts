@@ -6,14 +6,10 @@ import { DataService } from '@app/shared/services/data.service';
   templateUrl: './characters-list.component.html',
   styleUrls: ['./characters-list.component.scss']
 })
-export class CharactersListComponent implements OnInit {
+export class CharactersListComponent {
   characters$ = this.dataSvc.characters$;
 
   constructor(
     private dataSvc: DataService
   ) { }
-
-  ngOnInit(): void {
-  }
-
 }
