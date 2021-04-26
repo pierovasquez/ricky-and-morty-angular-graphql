@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Character } from '@app/shared/interfaces/data.interface';
+import { LocalStorageService } from '@app/shared/services/localStorage.service';
 
 @Component({
   selector: 'app-characters-card',
@@ -11,12 +12,15 @@ export class CharactersCardComponent {
 
   @Input() character: Character = <Character>{};
 
-  constructor() { }
+  constructor(
+    private localStorageService: LocalStorageService
+  ) { }
 
 
   onToggleFavorite(): void {
     this.character.isFavorite = !this.character.isFavorite;
     this.getIcon();
+    this.localStorageService.addOrRemoveFavorite(this.character);
   }
 
 
