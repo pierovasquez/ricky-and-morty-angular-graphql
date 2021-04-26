@@ -4,6 +4,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { BehaviorSubject } from 'rxjs';
 import {take, tap} from 'rxjs/operators'
 import { Character, DataResponse, Episode } from '../interfaces/data.interface';
+import { LocalStorageService } from './localStorage.service';
 const QUERY = gql `
 {
   episodes {
@@ -14,6 +15,7 @@ const QUERY = gql `
   }
   characters {
     results {
+      id
       name
       status
       species
@@ -37,7 +39,8 @@ export class DataService {
   characters$ = this.charactersSubject.asObservable();
 
   constructor(
-    private apollo: Apollo
+    private apollo: Apollo,
+    private localStorageService: LocalStorageService
   ) {
     this.getDataApi();
   }
@@ -52,8 +55,17 @@ export class DataService {
         console.log('res', data);
         const { characters, episodes} = data;
         this.episodeSubject.next(episodes.results);
-        this.charactersSubject.next(characters.results);
+        this.parseCharactersData(characters.results);
       })
     ).subscribe();
+  }
+
+  private parseCharactersData(characters: Character[]): void {
+    const currentFavs = this.localStorageService.getFavoritesCharacters();
+    const newData = characters.map(character => {
+      const found = !!currentFavs.find(current => current.id === character.id);
+      return {...character, isFavorite: found };
+    })
+    this.charactersSubject.next(newData);
   }
 }
