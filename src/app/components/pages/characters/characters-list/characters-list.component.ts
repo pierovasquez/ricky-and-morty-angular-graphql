@@ -12,6 +12,7 @@ const SCROLL_HEIGHT = 500;
 export class CharactersListComponent {
   characters$ = this.dataSvc.characters$;
   showButton = false;
+  private pageNum = 1;
 
   constructor(
     private dataSvc: DataService,
@@ -21,13 +22,16 @@ export class CharactersListComponent {
   @HostListener('window:scroll')
   onWindowScroll(): void {
     const yOffSet = window.pageYOffset;
-    console.log('yoff', yOffSet);
     const scrollTop = this.document.documentElement.scrollTop;
-    console.log('scrolltop', scrollTop);
     this.showButton = (yOffSet || scrollTop) > SCROLL_HEIGHT;
   }
 
   onScrollTop(): void {
     this.document.documentElement.scrollTop = 0;
+  }
+
+  onScrollDown(): void {
+    this.pageNum++;
+    this.dataSvc.getCharactersByPage(this.pageNum).subscribe();
   }
 }
