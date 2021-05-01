@@ -13,7 +13,7 @@ import { SpinnerInterceptor } from '@shared/interceptors/spinner.interceptor';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     GraphQLModule,
     HttpClientModule,
