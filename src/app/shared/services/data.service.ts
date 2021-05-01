@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { pluck, take, tap, withLatestFrom } from 'rxjs/operators';
+import { find, map, mergeMap, pluck, take, tap, withLatestFrom } from 'rxjs/operators';
 import { Character, DataResponse, Episode } from '../interfaces/data.interface';
 import { LocalStorageService } from './localStorage.service';
 const QUERY = gql`
@@ -97,5 +97,15 @@ export class DataService {
           this.parseCharactersData([...characters, ...apiResponse.results]);
         })
       );
+  }
+
+  getDetailsById(id: number): Observable<Character> {
+    return this.characters$.pipe(
+      tap(a => console.log('a', a)),
+      mergeMap((characters: Character[]) => characters),
+      tap(a => console.log('b', a)),
+      find((character: Character) => character?.id === id),
+      map(character => character ? character : {} as Character)
+    );
   }
 }
